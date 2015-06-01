@@ -6,6 +6,7 @@
     <format>zip</format>
   </formats>
   <includeBaseDirectory>false</includeBaseDirectory>
+  <!--
   <fileSets>
     <fileSet>
       <directory>${project.build.directory}</directory>
@@ -15,4 +16,21 @@
       </includes>
     </fileSet>
   </fileSets>
+  -->
+
+  <!-- Include original jar -->
+  <files>
+    <file>
+      <source>${project.build.directory}/${artifactId}-${version}.${packaging}.original</source>
+      <outputDirectory>${project.name}</outputDirectory>
+      <destName>${artifactId}-${version}.${packaging}</destName>
+    </file>
+  </files>
+
+  <!-- Include dependencies -->
+  <dependencySets>
+    <dependencySet>
+    <outputDirectory>${project.name}/lib</outputDirectory>
+    </dependencySet>
+  </dependencySets>
 </assembly>

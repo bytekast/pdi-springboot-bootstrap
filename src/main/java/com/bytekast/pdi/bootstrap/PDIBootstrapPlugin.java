@@ -3,20 +3,22 @@ package com.bytekast.pdi.bootstrap;
 import org.pentaho.di.core.plugins.PluginInterface;
 import org.pentaho.di.core.plugins.PluginRegistry;
 import org.pentaho.di.core.plugins.PluginTypeInterface;
-import org.pentaho.di.ui.spoon.*;
+import org.pentaho.di.ui.spoon.SpoonLifecycleListener;
+import org.pentaho.di.ui.spoon.SpoonPerspective;
+import org.pentaho.di.ui.spoon.SpoonPlugin;
+import org.pentaho.di.ui.spoon.SpoonPluginCategories;
+import org.pentaho.di.ui.spoon.SpoonPluginInterface;
 import org.pentaho.ui.xul.XulDomContainer;
 import org.pentaho.ui.xul.XulException;
-import org.springframework.boot.ExitCodeGenerator;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 
 @SpoonPlugin(id = "pdi-bootstrap-plugin", image = "")
 @SpoonPluginCategories({"spoon"})
 @SpringBootApplication
 public class PDIBootstrapPlugin implements SpoonPluginInterface {
 
-  private ApplicationContext applicationContext;
+  private boolean calledOnce = false;
+  private PDIBootstrap application = new PDIBootstrap();
 
   public static PluginInterface getPluginObject(String pluginId) {
     for (Class<? extends PluginTypeInterface> pluginType : PluginRegistry.getInstance().getPluginTypes()) {
@@ -28,8 +30,8 @@ public class PDIBootstrapPlugin implements SpoonPluginInterface {
   }
 
   public static String buildPluginFolderPath() {
-    PluginInterface plugin = getPluginObject( "pdi-bootstrap-plugin" );
-    if ( plugin != null && plugin.getPluginDirectory() != null ) {
+    PluginInterface plugin = getPluginObject("pdi-bootstrap-plugin");
+    if (plugin != null && plugin.getPluginDirectory() != null) {
       return plugin.getPluginDirectory().getFile();
     }
     return null;
@@ -51,7 +53,10 @@ public class PDIBootstrapPlugin implements SpoonPluginInterface {
       @Override
       public void onEvent(SpoonLifeCycleEvent spoonLifeCycleEvent) {
         if (spoonLifeCycleEvent.equals(SpoonLifeCycleEvent.STARTUP)) {
-          start();
+          if (!calledOnce) {
+            calledOnce = true;
+            start();
+          }
         }
         if (spoonLifeCycleEvent.equals(SpoonLifeCycleEvent.SHUTDOWN)) {
           stop();
@@ -60,20 +65,20 @@ public class PDIBootstrapPlugin implements SpoonPluginInterface {
     };
   }
 
-  private void start() {
+  private synchronized void start() {
     RunInPluginClassLoader.run(new Runnable() {
       @Override
       public void run() {
-        PDIBootstrap.main(new String[]{});
+        application.start();
       }
     });
   }
 
-  private void stop() {
+  private synchronized void stop() {
     RunInPluginClassLoader.run(new Runnable() {
       @Override
       public void run() {
-        PDIBootstrap.stop();
+        application.stop();
       }
     });
   }

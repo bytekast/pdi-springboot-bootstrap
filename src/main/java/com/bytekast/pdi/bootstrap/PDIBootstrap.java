@@ -8,18 +8,28 @@ import org.springframework.context.ApplicationContext;
 @SpringBootApplication
 public class PDIBootstrap {
 
-  private static ApplicationContext applicationContext;
+  private ApplicationContext applicationContext;
 
-  public static void main(String[] args) {
-    applicationContext = SpringApplication.run(PDIBootstrap.class, args);
+  public void start() {
+    applicationContext = SpringApplication.run(PDIBootstrap.class, new String[]{});
   }
 
-  public  static void stop() {
-    SpringApplication.exit(applicationContext, new ExitCodeGenerator() {
-      @Override
-      public int getExitCode() {
-        return 0;
-      }
-    });
+  public void stop() {
+    if (applicationContext != null) {
+      SpringApplication.exit(applicationContext, new ExitCodeGenerator() {
+        @Override
+        public int getExitCode() {
+          return 0;
+        }
+      });
+    }
+  }
+
+  public boolean isInitialized() {
+    return applicationContext != null;
+  }
+
+  public static void main(String[] args) {
+    (new PDIBootstrap()).start();
   }
 }
