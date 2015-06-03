@@ -30,7 +30,14 @@
   <!-- Include dependencies -->
   <dependencySets>
     <dependencySet>
-    <outputDirectory>${project.name}/lib</outputDirectory>
+      <outputDirectory>${project.name}/lib</outputDirectory>
+      <excludes>
+        <exclude>javax.servlet:javax.servlet-api</exclude>
+        <exclude>javax.servlet.jsp:javax.servlet.jsp-api</exclude>
+        <exclude>org.mortbay.jetty:jetty</exclude>
+        <exclude>org.mortbay.jetty:servlet-api</exclude>
+      </excludes>
+      <useProjectArtifact>false</useProjectArtifact>
     </dependencySet>
   </dependencySets>
 </assembly>

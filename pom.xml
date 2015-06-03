@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>pentaho</groupId>
   <artifactId>pdi-springboot-bootstrap</artifactId>
@@ -23,9 +23,12 @@
     <dependency.junit.junit.version>4.5</dependency.junit.junit.version>
     <dependency.org.mockito.mockito-all.version>1.9.5</dependency.org.mockito.mockito-all.version>
     <dependency.pentaho-kettle.kettle-core.version>${project.version}</dependency.pentaho-kettle.kettle-core.version>
-    <dependency.pentaho-kettle.kettle-engine.version>${project.version}</dependency.pentaho-kettle.kettle-engine.version>
-    <dependency.pentaho-kettle.kettle-engine-test.version>${project.version}</dependency.pentaho-kettle.kettle-engine-test.version>
-    <dependency.pentaho-kettle.kettle-ui-swt.version>${project.version}</dependency.pentaho-kettle.kettle-ui-swt.version>
+    <dependency.pentaho-kettle.kettle-engine.version>${project.version}
+    </dependency.pentaho-kettle.kettle-engine.version>
+    <dependency.pentaho-kettle.kettle-engine-test.version>${project.version}
+    </dependency.pentaho-kettle.kettle-engine-test.version>
+    <dependency.pentaho-kettle.kettle-ui-swt.version>${project.version}
+    </dependency.pentaho-kettle.kettle-ui-swt.version>
     <dependency.pentaho.metastore.version>${project.version}</dependency.pentaho.metastore.version>
   </properties>
   <scm>
@@ -45,17 +48,7 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <version>1.2.3.RELEASE</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-aop</artifactId>
-      <version>1.2.3.RELEASE</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-websocket</artifactId>
+      <artifactId>spring-boot-starter</artifactId>
       <version>1.2.3.RELEASE</version>
     </dependency>
     <dependency>
@@ -66,6 +59,11 @@
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+      <version>${spring.framework.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
       <artifactId>spring-aspects</artifactId>
       <version>${spring.framework.version}</version>
     </dependency>
@@ -73,6 +71,21 @@
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjrt</artifactId>
       <version>${aspectj.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>${aspectj.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.grizzly</groupId>
+      <artifactId>grizzly-http-servlet</artifactId>
+      <version>2.3.19</version>
     </dependency>
     <!-- ##################### PROVIDED #########################-->
     <dependency>
@@ -128,7 +141,7 @@
         <executions>
           <execution>
             <goals>
-                <goal>repackage</goal>
+              <goal>repackage</goal>
             </goals>
           </execution>
         </executions>
@@ -144,7 +157,8 @@
           <Xlint>ignore</Xlint>
           <complianceLevel>${compiler.version}</complianceLevel>
           <encoding>UTF-8</encoding>
-          <verbose>false</verbose>
+          <verbose>true</verbose>
+          <outxml>true</outxml>
           <aspectLibraries>
             <aspectLibrary>
               <groupId>org.springframework</groupId>
@@ -161,16 +175,21 @@
           </execution>
         </executions>
         <dependencies>
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjrt</artifactId>
-                <version>${aspectj.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjtools</artifactId>
-                <version>${aspectj.version}</version>
-            </dependency>
+          <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectj.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>${aspectj.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+          </dependency>
         </dependencies>
       </plugin>
       <plugin>

@@ -10,11 +10,9 @@ import org.pentaho.di.ui.spoon.SpoonPluginCategories;
 import org.pentaho.di.ui.spoon.SpoonPluginInterface;
 import org.pentaho.ui.xul.XulDomContainer;
 import org.pentaho.ui.xul.XulException;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpoonPlugin(id = "pdi-bootstrap-plugin", image = "")
 @SpoonPluginCategories({"spoon"})
-@SpringBootApplication
 public class PDIBootstrapPlugin implements SpoonPluginInterface {
 
   private boolean calledOnce = false;
